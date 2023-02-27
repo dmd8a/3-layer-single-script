@@ -39,15 +39,18 @@ class Singleton:
             return []
 
 
-def initialize_database(): 
+@pytest.fixture # https://medium.com/@geoffreykoh/fun-with-fixtures-for-database-applications-8253eaf1a6d
+def initialize_database():
     """Initialise a file, and use sqlite3 to generate a small table we'll use for testing"""
     connection = sqlite3.connect("aquarium.db")
     cursor = connection.cursor()
     print("INTIALIZING DATABASE")
     cursor.execute("CREATE TABLE fish (name TEXT, species TEXT, tank_number INTEGER)")
-    cursor.execute("INSERT INTO fish VALUES ('Sammy', 'shark', 1)")
-    cursor.execute("INSERT INTO fish VALUES ('Jamie', 'cuttlefish', 7)")
-    connection.commit()
+    data = [
+        ('Sammy', 'shark', 1),
+        ('Jamie', 'cuttlefish', 7)]
+    cursor.executemany('INSERT INTO fish VALUES(?, ?, ?)', data)
+    connection.commit
 
 def delete_database():
     """Delete, or clear the entire database completely
