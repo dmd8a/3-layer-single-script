@@ -1,6 +1,6 @@
 default:
 	@cat Makefile
-view:
+view:	test
 	python db_viewer.py
 init:
 	python initialize_database.py
