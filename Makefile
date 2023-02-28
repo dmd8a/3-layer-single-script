@@ -6,7 +6,8 @@ init:
 	python initialize_database.py
 test:
 	pytest -vvx db_viewer.py
+clean_view:
+	clean init view	
 clean:
 	rm aquarium.db
-clean_view:
-	clean init view
+
